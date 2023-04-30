@@ -4,9 +4,107 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <title>Search and Filter</title>
 </head>
 <body>
-    <h1>Books</h1>
+    <%- include('nav') %>
+  
+<div class="container mt-3">
+    <form class="row" action="/home" method="post">
+      <div class="col-md-6">
+        <div class="input-group mb-3">
+          <input type="text" name="bookTitle" class="form-control" placeholder="Enter book title" aria-label="Enter book title" aria-describedby="search-btn">
+          <button class="btn btn-outline-secondary" type="s" id="search-btn"><i class="bi bi-search"></i>Search</button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <button class="btn btn-outline-secondary float-end" type="button" id="filter-btn"><i class="bi bi-funnel"></i> Filters</button>
+      </div>
+    </form>
+  
+    <!-- Filter options -->
+    <form class="row mt-3 d-none" id="filter-options" action="/home" method="post">
+      <div class="col-md-6">
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="isbn-addon">ISBN</span>
+          <input type="number" name="isbn" class="form-control" placeholder="Enter ISBN" aria-label="Enter ISBN" aria-describedby="isbn-addon">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="authors-addon">Authors</span>
+          <input type="text" name="authors" class="form-control" placeholder="Enter author names" aria-label="Enter author names" aria-describedby="authors-addon">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="before-addon">Before</span>
+          <input type="number" class="form-control" placeholder="Enter year" aria-label="Enter year" aria-describedby="before-addon">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="after-addon">After</span>
+          <input type="number" name="afterYear" class="form-control" placeholder="Enter year" aria-label="Enter year" aria-describedby="after-addon">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="page-count-addon">Page Count</span>
+          <input type="range" name="pageCount" class="form-range" min="0" max="1000" id="page-count" aria-describedby="page-count-addon" value="1000">
+          <div class="slider-value">0</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <button type="submit" class="btn btn-primary float-end"><i class="bi bi-funnel"></i> Submit</button>
+      </div>
+    </form>
+  </div>
+  
+  <script>
+    const slider = document.getElementById('page-count');
+    const sliderValue = document.querySelector('.slider-value');
+
+    slider.addEventListener('input', (event) => {
+        sliderValue.textContent = event.target.value;
+    });
+
+  const filterBtn = document.querySelector('#filter-btn');
+  const filters = document.querySelector('#filter-options');
+
+  filterBtn.addEventListener('click', () => {
+    filters.classList.toggle('d-none');
+  });
+  </script>
+  
+      
+        
+
+    <div class="books">
+        <% if(books.length > 0) { %> 
+          <% for(let i = 0; i < books.length; i++){ %>
+        <div class="card">
+          <a href="/loadBook/:<%=i%>">
+            <div class="book">
+              <img
+                class="book-img"
+                src="<%=books[i].thumbnailUrl%>"
+                alt="normal People book"
+              />
+            </div>
+          </a>
+          <div class="bookTitle"><%= books[i].title %></div>
+          <p style="font-size: 0.5em; max-width: 100%">
+            <%= books[i].shortDescription %>
+          </p>
+        </div>
+  
+        <% } %> <% }else { %>
+        <p>No books to display</p>
+        <% } %>
+      </div>
 </body>
 </html>

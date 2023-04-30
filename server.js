@@ -7,8 +7,10 @@ const connectDB = require('./config/DBconnection')
 
 const app = express()
 const PORT = process.env.PORT
+
 connectDB()
-const User = require('./model/User.js')
+// const User = require('./model/User.js')
+// const Book = require('./model/Book.js')
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
@@ -17,11 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('view engine', 'ejs')
 app.use('/login', require(path.join(__dirname, 'routes', 'accountPage', 'login')))
 app.use('/signup', require(path.join(__dirname, 'routes', 'accountPage', 'signup')))
-  
-
-app.get('/home', (req, res)=>{
-    res.render('home')
-})
+app.use('/home', require(path.join(__dirname, 'routes', 'homePage', 'search')))
 
 app.listen(PORT, ()=>{
     console.log(`Listening on port ${PORT}`)

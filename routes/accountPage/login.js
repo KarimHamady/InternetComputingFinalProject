@@ -6,7 +6,6 @@ const loginController = require(path.join('..', '..', 'controllers', 'loginContr
 
 router.route('/')
     .get((req, res)=>{
-        console.log("HERE")
         res.render('login')
     })
     .post(loginController.login)
