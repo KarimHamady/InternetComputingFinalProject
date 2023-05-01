@@ -27,24 +27,23 @@ const bookSchema = new mongoose.Schema({
     required: true
   },
   longDescription: {
-    type: String,
-    required: true
+    type: String
   },
   status: {
-    type: String,
-    required: true
+    type: String
   },
   authors: {
     type: Array,
     required: true
   },
   categories: {
-    type: Array,
-    required: true
+    type: Array
   }
 });
 
-bookSchema.statics.removeDocumentsWithoutShortDescription = async function() {
-  return this.deleteMany({ shortDescription: { $exists: false } });
-}
-module.exports = mongoose.model('Book', bookSchema);
+// bookSchema.statics.removeDocumentsWithoutShortDescription = async function() {
+//   return this.deleteMany({ shortDescription: { $exists: false } });
+// }
+
+const Book = mongoose.model('Book', bookSchema);
+module.exports = Book

@@ -24,10 +24,8 @@
       <div class="col-md-3">
         <button class="btn btn-outline-secondary float-end" type="button" id="filter-btn"><i class="bi bi-funnel"></i> Filters</button>
       </div>
-      <div class="col-md-3">
-        <button class="btn btn-outline-secondary float-end" type="button" id="addBook-btn"><i class="bi bi-funnel"></i> Add Book</button>
-      </div>
     </form>
+    
   
     <!-- Filter options -->
     <form class="row mt-3 d-none" id="filter-options" action="/home" method="post">
@@ -105,11 +103,18 @@
           <p id="bookDescription<%= i %>" style="font-size: 0.75em">
             <%= books[i].shortDescription %>
           </p>
-          <div class="editButton">
-            <button style="border-radius: 0px" class="btn btn-outline-secondary float-end" type="button">
+          <form class="editButton" action="/editBook" method="post">
+            <input type="hidden" name="title" value="<%= books[i].title %>">
+            <input type="hidden" name="isbn" value="<%= books[i].isbn %>">
+            <input type="hidden" name="authors" value="<%= books[i].authors %>">
+            <input type="hidden" name="pageCount" value="<%= books[i].pageCount %>">
+            <input type="hidden" name="date" value="<%= books[i].publishedDate %>">
+            <input type="hidden" name="url" value="<%= books[i].thumbnailUrl %>">
+            <input type="hidden" name="description" value="<%= books[i].shortDescription %>">
+            <button type="submit" style="border-radius: 0px" class="btn btn-outline-secondary float-end" type="button">
               <i class="bi bi-funnel"></i>Edit Book
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>
