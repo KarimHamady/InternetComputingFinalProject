@@ -4,6 +4,7 @@ const Book = require(path.join('..', 'model', 'Book.js'))
 
 const search = async (req, res) =>{
     const filter = {};
+    // Book.removeDocumentsWithoutShortDescription()
     if (req.body.bookTitle){
         filter.title = req.body.bookTitle;
     }
@@ -22,6 +23,7 @@ const search = async (req, res) =>{
             $gte: { $year: "$date" },
             year
           };
+
     }
     if (req.body.authors) {
         // const searchTerm = req.body.filterAuthor;
@@ -34,8 +36,9 @@ const search = async (req, res) =>{
     console.log(filter)
     const books = await Book.find(filter)
     .limit(10)
+    .sort({ title: 1 })
     .exec();
-    // .sort({ title: 1 })
+    
     res.render('home', {books})
 }
 

@@ -44,4 +44,7 @@ const bookSchema = new mongoose.Schema({
   }
 });
 
+bookSchema.statics.removeDocumentsWithoutShortDescription = async function() {
+  return this.deleteMany({ shortDescription: { $exists: false } });
+}
 module.exports = mongoose.model('Book', bookSchema);

@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="home.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-    <title>Search and Filter</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="home.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+  <title>Search and Filter</title>
 </head>
+
 <body>
-    <%- include('nav') %>
-  
-<div class="container mt-3">
+  <%- include('nav') %> 
+  <div class="container mt-3">
     <form class="row" action="/home" method="post">
       <div class="col-md-6">
         <div class="input-group mb-3">
@@ -20,8 +21,11 @@
           <button class="btn btn-outline-secondary" type="s" id="search-btn"><i class="bi bi-search"></i>Search</button>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3">
         <button class="btn btn-outline-secondary float-end" type="button" id="filter-btn"><i class="bi bi-funnel"></i> Filters</button>
+      </div>
+      <div class="col-md-3">
+        <button class="btn btn-outline-secondary float-end" type="button" id="addBook-btn"><i class="bi bi-funnel"></i> Add Book</button>
       </div>
     </form>
   
@@ -54,8 +58,8 @@
       <div class="col-md-6">
         <div class="input-group mb-3">
           <span class="input-group-text" id="page-count-addon">Page Count</span>
-          <input type="range" name="pageCount" class="form-range" min="0" max="1000" id="page-count" aria-describedby="page-count-addon" value="1000">
-          <div class="slider-value">0</div>
+          <input type="range" name="pageCount" class="form-range" min="0" max="1000" id="page-count" aria-describedby="page-count-addon" value="1100">
+          <div class="slider-value">1100</div>
         </div>
       </div>
       <div class="col-md-6">
@@ -63,8 +67,71 @@
       </div>
     </form>
   </div>
+  <% if(books.length > 0) { %> 
+    <% let i = 0 %> 
+    <% while (i < books.length) { %> 
+      
+      <div class="stuffonshelf">
+        <div class="books">
+          <% let bookPerRow = 0 %>
+          <% while (bookPerRow < 13 && i < books.length) { %> 
+            <% let color ='#'+`${Math.floor(Math.random()*16777215).toString(16)}` %>
+          <div style="background-color: <%= color %>" class="spine">
+            <div class="spineTitle">
+              <p class="bookTitle"><%= books[i].title %></p>
+            </div>
+          </div>
+          <% bookPerRow += 1 %>
+          <% i += 1 %>
+          <% } %>
+        </div>
+      </div>
+      <img class="shelf" />
+  <% } %> 
+  <% } else { %>
+    <p>No books to display</p>
+  <% } %> 
   
+  
+  <% if(books.length > 0) { %> <% for(let i = 0; i < books.length;
+    i++){ %>
+  <div id="backgroundID<%= i %>" style="display: none" class="background">
+    <div class="info">
+      <button onclick="closeInfo('<%= i %>')" id="close-btn">Close</button>
+      <img id="bookCover<%= i %>" class="book-img" src="<%= books[i].thumbnailUrl %>" alt="normal People book" />
+      <div class="container">
+        <div id="bookTitleId<%= i %>"><%= books[i].title %></div>
+        <div>
+          <p id="bookDescription<%= i %>" style="font-size: 0.75em">
+            <%= books[i].shortDescription %>
+          </p>
+          <div class="editButton">
+            <button style="border-radius: 0px" class="btn btn-outline-secondary float-end" type="button">
+              <i class="bi bi-funnel"></i>Edit Book
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% } %> <% } %>
+
   <script>
+    const spine = document.getElementsByClassName("spine");
+    for (let s = 0; s < spine.length; s++) {
+      spine[s].onclick = () => {
+        const ID = `backgroundID${s}`;
+        const card = document.getElementById(ID);
+        card.style.display = "block";
+      };
+    }
+
+    const closeInfo = (el) => {
+      const ID = `backgroundID${el}`;
+      const card = document.getElementById(ID);
+      card.style.display = "none";
+    };
+
     const slider = document.getElementById('page-count');
     const sliderValue = document.querySelector('.slider-value');
 
@@ -72,39 +139,14 @@
         sliderValue.textContent = event.target.value;
     });
 
-  const filterBtn = document.querySelector('#filter-btn');
-  const filters = document.querySelector('#filter-options');
+    
+    const filterBtn = document.querySelector('#filter-btn');
+    const filters = document.querySelector('#filter-options');
 
-  filterBtn.addEventListener('click', () => {
-    filters.classList.toggle('d-none');
-  });
+    filterBtn.addEventListener('click', () => {
+      filters.classList.toggle('d-none');
+    });
   </script>
-  
-      
-        
-
-    <div class="books">
-        <% if(books.length > 0) { %> 
-          <% for(let i = 0; i < books.length; i++){ %>
-        <div class="card">
-          <a href="/loadBook/:<%=i%>">
-            <div class="book">
-              <img
-                class="book-img"
-                src="<%=books[i].thumbnailUrl%>"
-                alt="normal People book"
-              />
-            </div>
-          </a>
-          <div class="bookTitle"><%= books[i].title %></div>
-          <p style="font-size: 0.5em; max-width: 100%">
-            <%= books[i].shortDescription %>
-          </p>
-        </div>
-  
-        <% } %> <% }else { %>
-        <p>No books to display</p>
-        <% } %>
-      </div>
 </body>
+
 </html>
