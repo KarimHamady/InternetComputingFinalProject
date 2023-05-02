@@ -6,17 +6,22 @@ const path = require('path')
 router.route('/')
     .post((req, res) => {
         a = {}
-        const {title, isbn, authors, pageCount, publishedDate, thumbnailUrl, shortDescription} = req.body
+        const {title, isbn, authors, pageCount, date, url, description} = req.body
 
-        console.log(req.body.book)
+        const dateObj = new Date(date);
+        const year = dateObj.getFullYear();
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
+
         res.render('addBookForm', {
             title,
             isbn,
             authors,
             pageCount,
-            url: thumbnailUrl,
-            description: shortDescription,
-            date: publishedDate
+            url,
+            description,
+            date: formattedDate
             
         })
     })

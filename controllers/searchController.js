@@ -35,7 +35,7 @@ const search = async (req, res) =>{
     }
     console.log(filter)
     const books = await Book.find(filter)
-    .limit(10)
+    .limit(5)
     .sort({ title: 1 })
     .exec();
     

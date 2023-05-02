@@ -4,7 +4,7 @@ const Book = require(path.join('..', 'model', 'Book.js'))
 
 const addBook = async (req, res) => {
     const { title, isbn, authors, pageCount, publishedDate, thumbnailUrl, shortDescription } = req.body;
-    const authorsArray = authors.split(' ');
+    const authorsArray = authors.split(' ')
     await Book.create({
         title,
         isbn,

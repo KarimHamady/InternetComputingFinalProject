@@ -12,7 +12,7 @@
 </head>
 
 <body>
-  <%- include('nav') %> 
+  <%- include('nav') %>
   <div class="container mt-3">
     <form class="row" action="/home" method="post">
       <div class="col-md-6">
@@ -94,29 +94,42 @@
   <% if(books.length > 0) { %> <% for(let i = 0; i < books.length;
     i++){ %>
   <div id="backgroundID<%= i %>" style="display: none" class="background">
-    <div class="info">
-      <button onclick="closeInfo('<%= i %>')" id="close-btn">Close</button>
-      <img id="bookCover<%= i %>" class="book-img" src="<%= books[i].thumbnailUrl %>" alt="normal People book" />
-      <div class="container">
-        <div id="bookTitleId<%= i %>"><%= books[i].title %></div>
-        <div>
-          <p id="bookDescription<%= i %>" style="font-size: 0.75em">
-            <%= books[i].shortDescription %>
-          </p>
-          <form class="editButton" action="/editBook" method="post">
-            <input type="hidden" name="title" value="<%= books[i].title %>">
-            <input type="hidden" name="isbn" value="<%= books[i].isbn %>">
-            <input type="hidden" name="authors" value="<%= books[i].authors %>">
-            <input type="hidden" name="pageCount" value="<%= books[i].pageCount %>">
-            <input type="hidden" name="date" value="<%= books[i].publishedDate %>">
-            <input type="hidden" name="url" value="<%= books[i].thumbnailUrl %>">
-            <input type="hidden" name="description" value="<%= books[i].shortDescription %>">
-            <button type="submit" style="border-radius: 0px" class="btn btn-outline-secondary float-end" type="button">
-              <i class="bi bi-funnel"></i>Edit Book
-            </button>
-          </form>
+    <div class="bodyBook">
+      <div class="book">
+        <div class="back"></div>
+        <div class="page6">
+          <div class="bookD">
+            <p id="bookDescription<%= i %>" style="font-size: 0.75em">
+              <%= books[i].shortDescription %>
+            </p>
+          </div>
+        </div>
+        <div class="page5"></div>
+        <div class="page4"></div>
+        <div class="page3"></div>
+        <div class="page2"></div>
+        <div class="page1"></div>
+        <div class="front"><img id="bookCover<%= i %>" class="book-img" src="<%= books[i].thumbnailUrl %>" alt="normal People book" />
         </div>
       </div>
+    </div>
+    <div class="onTop">
+      <div class="button-container">
+        <button onclick="closeInfo('<%= i %>')" id="close-btn">Return</button>
+        <form class="editButton" action="/editBook" method="post">
+          <input type="hidden" name="title" value="<%= books[i].title %>">
+          <input type="hidden" name="isbn" value="<%= books[i].isbn %>">
+          <input type="hidden" name="authors" value="<%= books[i].authors %>">
+          <input type="hidden" name="pageCount" value="<%= books[i].pageCount %>">
+          <input type="hidden" name="date" value="<%= books[i].publishedDate %>">
+          <input type="hidden" name="url" value="<%= books[i].thumbnailUrl %>">
+          <input type="hidden" name="description" value="<%= books[i].shortDescription %>">
+          <button type="submit" style="border-radius: 0px" class="btn btn-outline-secondary float-end">
+            <i class="bi bi-funnel"></i>Edit
+          </button>
+        </form>
+      </div>
+      
     </div>
   </div>
   <% } %> <% } %>

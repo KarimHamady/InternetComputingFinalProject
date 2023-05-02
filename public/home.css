@@ -78,10 +78,6 @@ body {
 }
 
 
-.book-img {
-  height: 60%;
-}
-
 .books {
   display: flex;
   flex-wrap: wrap;
@@ -127,21 +123,21 @@ body {
   transform: rotateY(0deg);
 }
 
-.editButton {
-  position: absolute;
-  bottom: 0;
+/* .editButton {
+ position: absolute;
+  top: 0;
   left: 0;
-  width: 100%;
+  width: 10vw;
   text-align: center;
   border-radius: 0px;
-}
+} */
 
 .editButton:hover button {
   transform: translateY(-5px);
 }
 
 .editButton button {
-  width: 100%;
+  /* width: 100%; */
   background-color: #fff;
   color: #000;
   border: none;
@@ -150,13 +146,6 @@ body {
   transition: all 0.2s ease;
 }
 
-
-
-#close-btn {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
 
 .shelf {
   display: block;
@@ -184,6 +173,8 @@ body {
 
 .background {
   position: fixed;
+  display: flex;
+  flex-direction: column;
   z-index: 12;
   top: 0;
   bottom: 0;
@@ -196,11 +187,10 @@ body {
 }
 
 .info {
-  position: absolute;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 60vw;
+  width: 10vw;
   height: 60vh;
   top: 0;
   bottom: 0;
@@ -208,12 +198,247 @@ body {
   left: 0;
   margin: auto;
   opacity: 1;
-  background-color: rgb(47, 121, 182);
+  /* background-color: rgb(47, 121, 182); */
 }
 
+/* Background overlay */
+/* .background {
+  position: fixed;
+  z-index: 12;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+} */
+
+/* .background.show {
+  opacity: 1;
+} */
+
+/* Book info container */
+/* .info {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 80vw;
+  height: 80vh;
+  max-width: 800px;
+  max-height: 600px;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+  transform: scale(0.9);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.info.show {
+  transform: scale(1);
+  opacity: 1;
+} */
+
+/* Close button */
+#close-btn {
+  margin: 0.5rem;
+  padding: 0.5rem 0.5rem;
+  background-color: #fff;
+  color: #333;
+  border: none;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#close-btn:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+/* Book image */
+.book-img {
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+}
+
+/* Book information container */
 .container {
   display: flex;
   flex-direction: column;
-  width: 10vw;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 1rem;
 }
+
+/* Book title */
+.bookT {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+/* Book description */
+.bookD {
+  font-size: 1rem;
+  margin: 1rem;
+}
+
+/* Edit button */
+/* .editButton {
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+} */
+
+.editButton button {
+  padding: 0.5rem 1rem;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.editButton button:hover {
+  background-color: #fff;
+  color: #333;
+}
+
+.editButton i {
+  margin-right: 0.5rem;
+}
+
+.bodyBook {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1200px;
+  background: #ccc;
+}
+
+
+.book {
+  transform-style: preserve-3d;
+  position: relative;
+  height: 300px;
+  cursor: pointer;
+  backface-visibility: visible;
+}
+
+.onTop {
+  position: absolute;
+  width: 100%;
+  z-index: 12;
+  top: 0;
+  left: 0;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.front, .back, .page1, .page2, .page3, .page4, .page5, .page6 {
+  transform-style: preserve-3d;
+  position: absolute;
+  width: 200px;
+  height: 100%;
+  top: 0; left: 0;
+  transform-origin: left center;
+  transition: transform .5s ease-in-out, box-shadow .35s ease-in-out;
+}
+
+.front, .back {
+  background: navy;
+}
+
+.front, .page1, .page3, .page5 {
+  border-bottom-right-radius: .5em;
+  border-top-right-radius: .5em;
+}
+
+.back, .page2, .page4, .page6 {
+  border-bottom-right-radius: .5em;
+  border-top-right-radius: .5em;
+}
+
+.page1 { 
+  background: #efefef;
+}
+
+.page2 {
+  background: #efefef;
+}
+
+.page3 {
+  background: #f5f5f5;
+}
+
+.page4 {
+  background: #f5f5f5;
+}
+
+.page5 {
+  background: #fafafa;
+}
+
+.page6 {
+  background: #fdfdfd;
+}
+
+.book:hover .front {
+  transform: rotateY(-160deg) scale(1.1);
+  box-shadow: 0 1em 3em 0 rgba(0, 0, 0, .2);
+}
+
+.book:hover .page1 {
+  transform: rotateY(-150deg) scale(1.1);
+  box-shadow: 0 1em 3em 0 rgba(0, 0, 0, .2);
+}
+
+.book:hover .page2 {
+  transform: rotateY(-30deg) scale(1.1);
+  box-shadow: 0 1em 3em 0 rgba(0, 0, 0, .2);
+}
+
+.book:hover .page3 {
+  transform: rotateY(-140deg) scale(1.1);
+  box-shadow: 0 1em 3em 0 rgba(0, 0, 0, .2);
+}
+
+.book:hover .page4 {
+  transform: rotateY(-40deg) scale(1.1);
+  box-shadow: 0 1em 3em 0 rgba(0, 0, 0, .2);
+}
+
+.book:hover .page5 {
+  transform: rotateY(-130deg) scale(1.1);
+  box-shadow: 0 1em 3em 0 rgba(0, 0, 0, .2);
+}
+
+.book:hover .page6 {
+  transform: rotateY(-50deg) scale(1.1);
+  box-shadow: 0 1em 3em 0 rgba(0, 0, 0, .2);
+}
+
+.book:hover .back {
+  transform: rotateY(-20deg) scale(1.1);
+}
+
+
 
