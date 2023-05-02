@@ -116,7 +116,7 @@
     <div class="onTop">
       <div class="button-container">
         <button onclick="closeInfo('<%= i %>')" id="close-btn">Return</button>
-        <form class="editButton" action="/editBook" method="post">
+        <form class="editButton" action="/editBook" method="get">
           <input type="hidden" name="title" value="<%= books[i].title %>">
           <input type="hidden" name="isbn" value="<%= books[i].isbn %>">
           <input type="hidden" name="authors" value="<%= books[i].authors %>">

@@ -12,7 +12,8 @@ router.route('/')
             pageCount: '',
             date: '',
             url: '',
-            description: ''
+            description: '',
+            type: 'Add'
         })
     })
     .post(addBookController.addBook)

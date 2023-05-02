@@ -1,12 +1,12 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path')
-// const editBookController = require(path.join('..', '..', 'controllers', 'editBookController'))
+const editBookController = require(path.join('..', '..', 'controllers', 'editBookController'))
 
 router.route('/')
-    .post((req, res) => {
+    .get((req, res) => {
         a = {}
-        const {title, isbn, authors, pageCount, date, url, description} = req.body
+        const {title, isbn, authors, pageCount, date, url, description} = req.query
 
         const dateObj = new Date(date);
         const year = dateObj.getFullYear();
@@ -21,9 +21,11 @@ router.route('/')
             pageCount,
             url,
             description,
-            date: formattedDate
+            date: formattedDate,
+            type: 'Update'
             
         })
     })
+    .post(editBookController.editBook)
 
 module.exports = router
